@@ -1,1 +1,77 @@
-<p>孙翔是个小学生</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>数字笑笑笑</title>
+</head>
+<style>
+  header{
+    text-align: center;
+  }
+  ul#digits{
+    width: 104px;
+    height: 104px;
+    padding: 0;
+    margin: 0 auto;
+  }
+  li{
+    float: left;
+    list-style-type: none;
+    width: 50px; height: 50px;
+    margin: 0px 1px 1px 0px;
+    line-height: 50px;
+    background-color: red;
+    font-size: 24px;
+    text-align: center;
+    color: white;
+  }
+  li:hover{
+    cursor: pointer;
+  }
+</style>
+<body>
+<header>
+  <h1>数字消消乐 V1</h1>
+</header>
+<article>
+  <ul id="digits">
+    <li id="item1" onclick="clickOne()">1</li>
+    <li id="item2" onclick="clickTwo()">2</li>
+    <li id="item3" onclick="clickThree()">3</li>
+    <li id="item4" onclick="clickFour()">4</li>
+  </ul>
+</article>
+</body>
+<script>
+  var index = 1;
+  //定义数字按钮 1 的事件处理函数
+  function clickOne(){
+    if(index == 1){
+      index = index + 1;
+    }else{
+      alert("闯关失败!");
+    }
+  } //定义数字按钮 2 的事件处理函数
+  function clickTwo(){
+    if(index == 2){
+      index = index + 1;
+    }else{
+      alert("闯关失败!");
+    }
+  } //定义数字按钮 3 的事件处理函数
+  function clickThree() {
+    if (index == 3) {
+      index = index + 1;
+    }else{
+      alert("闯关失败!");
+    }
+  } //定义数字按钮 4 的事件处理函数
+  function clickFour(){
+  if(index == 4){
+    alert("您单击了 4，闯关成功！");
+  }else{
+    alert("闯关失败!");
+  }
+  }
+</script>
+</html>
