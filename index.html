@@ -2,76 +2,150 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>数字笑笑笑</title>
+    <title>消消乐v3</title>
+    <style>
+        header {
+            text-align: center;
+        }
+
+        ul {
+            width: 200px;
+            height: 200px;
+            padding: 0;
+            margin: 0 auto;
+        }
+
+        li {
+            float: left;
+            list-style-type: none;
+            width: 50px;
+            height: 50px;
+            margin: 0px 1px 1px 0px;
+            line-height: 50px;
+            background-color: gray;
+            font-size: 24px;
+            text-align: center;
+            color: white;
+        }
+
+        li:hover {
+            cursor: pointer;
+        }
+
+        #seconds {
+            font-size: 18px;
+            font-weight: 900;
+        }
+
+        #start {
+            background-color: #d347a7;
+            border: none;
+            color: white;
+            width: 100px;
+            height: 30px;
+            font-size: 20px;
+        }
+    </style>
 </head>
-<style>
-  header{
-    text-align: center;
-  }
-  ul#digits{
-    width: 104px;
-    height: 104px;
-    padding: 0;
-    margin: 0 auto;
-  }
-  li{
-    float: left;
-    list-style-type: none;
-    width: 50px; height: 50px;
-    margin: 0px 1px 1px 0px;
-    line-height: 50px;
-    background-color: red;
-    font-size: 24px;
-    text-align: center;
-    color: white;
-  }
-  li:hover{
-    cursor: pointer;
-  }
-</style>
 <body>
-<header>
-  <h1>数字消消乐 V1</h1>
-</header>
 <article>
-  <ul id="digits">
-    <li id="item1" onclick="clickOne()">1</li>
-    <li id="item2" onclick="clickTwo()">2</li>
-    <li id="item3" onclick="clickThree()">3</li>
-    <li id="item4" onclick="clickFour()">4</li>
-  </ul>
+    <div>
+        <input type="button" name="" id="start" value="开始游戏" onclick="startGame()">
+        <span id="seconds">计时: 0 s</span>
+    </div>
+</article>
+<article>
+    <ul id="mid">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+        <li>7</li>
+        <li>8</li>
+        <li>9</li>
+    </ul>
+    <input onclick="setBkColor()" type="button" value="换个颜色">
 </article>
 </body>
 <script>
-  var index = 1;
-  //定义数字按钮 1 的事件处理函数
-  function clickOne(){
-    if(index == 1){
-      index = index + 1;
-    }else{
-      alert("闯关失败!");
+    var index = 1;
+    var colors = ["#57bbbb", "#4b8ec5", "#ca63de", "#44d2d2", "#38358f", "#206c13", "#ff8585", "#f7ff85", "#bd384b", "#695a5a", "#c97455", "#e09744", "#73a22a", "#25c487", "#a3dcdb", "#2457b6", "#5844af", "#d347a7"];
+    //colors 颜色库
+    var nums = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    var timer = null;
+    //times 控制游戏时间
+    var seconds = 0;
+    //游戏的用时
+    var isStart = false;
+
+    //判断用户是否点击了开始游戏
+    function setBkColor() {
+        //setBkColor 随机颜色散布
+        var k;
+        for (let i = 0; i < buts.length; i++) {
+            k = Math.floor(Math.random() * colors.length);
+            buts[i].style.backgroundColor = colors[k];
+        }
     }
-  } //定义数字按钮 2 的事件处理函数
-  function clickTwo(){
-    if(index == 2){
-      index = index + 1;
-    }else{
-      alert("闯关失败!");
+
+    function shuffle() {
+        //shuffle 数字随机布局
+        var n = nums.length
+        for (let i = 0; i < n; i++) {
+            var k = Math.floor(Math.random() * n);
+            while (k == i) {
+                k = Math.floor(Math.random() * n);
+            }
+            var temp = nums[i];
+            nums[i] = nums[k];
+            nums[k] = temp;
+        }
+        for (let i = 0; i < buts.length; i++) {
+            buts[i].innerText = String(nums[i]);
+        }
     }
-  } //定义数字按钮 3 的事件处理函数
-  function clickThree() {
-    if (index == 3) {
-      index = index + 1;
-    }else{
-      alert("闯关失败!");
+
+    function startGame() {
+        //startGame 开始游戏按钮
+        isStart = true;
+        //isStart 确定用户已经点击开始游戏
+        var x = 100;
+        shuffle();
+        //调用数字布局
+        setBkColor();
+        //调用颜色布局
+        timer = setInterval(function () {
+            seconds++;
+            document.getElementById("seconds").innerText = "计时:" + seconds + "s";
+        }, x)
+        //timer 计时器开始
     }
-  } //定义数字按钮 4 的事件处理函数
-  function clickFour(){
-  if(index == 4){
-    alert("您单击了 4，闯关成功！");
-  }else{
-    alert("闯关失败!");
-  }
-  }
+
+    function clickDigit() {
+        //点击事件
+        if (isStart == false) {
+            window.alert("请先开始游戏");
+            return;
+        }
+        if (index == this.innerHTML) {
+            this.style.visibility = "hidden";
+            if (index == 9) {
+                window.alert("闯关成功,共使用" + seconds + "s");
+                //location.reload();//刷新页面
+                location.replace(location.href)
+            }
+            index++;
+        } else {
+            window.alert("闯关失败,再来一次");
+            location.replace(location.href)
+        }
+    }
+    var buts = document.getElementsByTagName("li")
+    for (let i = 0; i < buts.length; i++) {
+        buts[i].onclick = clickDigit;
+        //循环调用clickdigit 函数判断是否点击正确
+    }
 </script>
 </html>
